@@ -7,7 +7,7 @@
 from the terminal prompt line by typing ```python main.py```
 
 ### Execution
-Click on ```http://0.0.0.0:8012``` link to open in the browser. You can also copy and past the link.
+Click on ```http://0.0.0.0:8011``` link to open in the browser. You can also copy and past the link.
 
 Accessing the URL ```http://0.0.0.0:8011/docs``` will navigate to the [OpenAPI](https://www.openapis.org/)
 page/documentation for the application.
