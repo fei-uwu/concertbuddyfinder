@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.concertbuddy</groupId>
-	<artifactId>concertbuddyuser</artifactId>
+	<artifactId>concertbuddyfinder</artifactId>
 	<version>0.0.1</version>
-	<name>concertbuddyuser</name>
-	<description>User microservice for the ConcertBuddy project</description>
+	<name>concertbuddyfinder</name>
+	<description>Finder microservice for the ConcertBuddy project</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
