@@ -18,7 +18,7 @@ public class MatchController {
     }
 
     @GetMapping
-    public List<Match> getMatchs() {
+    public List<Match> getMatches() {
         return matchService.getMatches();
     }
 
