@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1/matches")
+@RequestMapping(path = "api/v1/finder/matches")
 public class MatchController {
 
     private final MatchService matchService;
