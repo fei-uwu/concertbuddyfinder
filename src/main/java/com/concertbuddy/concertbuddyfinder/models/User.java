@@ -91,7 +91,12 @@ public class User {
     }
 
     public Integer getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+        // return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getEmail() {
