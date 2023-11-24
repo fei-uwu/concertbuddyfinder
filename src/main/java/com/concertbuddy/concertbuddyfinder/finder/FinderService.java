@@ -1,14 +1,19 @@
 package com.concertbuddy.concertbuddyfinder.finder;
 
 import com.concertbuddy.concertbuddyfinder.match.MatchRepository;
-import com.concertbuddy.concertbuddyfinder.models.Song;
+// import com.concertbuddy.concertbuddyfinder.models.Song;
+import com.concertbuddy.concertbuddyfinder.models.SongsResponse;
+import com.concertbuddy.concertbuddyfinder.models.SongsResponse.Song;
 import com.concertbuddy.concertbuddyfinder.models.User;
 import com.concertbuddy.concertbuddyfinder.models.UserSimilarity;
 
 import com.concertbuddy.concertbuddyfinder.match.Match;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,17 +39,33 @@ public class FinderService {
         this.matchRepository = matchRepository;
     }
 
-    // TODO: Add concert info to similarity algorithm 
+    // TODO: When calculate similarity, only use users that are INTERESTED + ATTENDING the concert
     public Match FindMatch(UUID userId, UUID concertId) {
-        User user1 = getUserById(UUID.randomUUID());
-        System.out.println("User info");
-        System.out.println(user1.toString());
-        User[] users = getAllUsers();
+        RestTemplate restTemplate = new RestTemplate();
+        // Get user info
+        String getUserUrl = "http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/" + userId;
+        User user1 = restTemplate.getForObject(getUserUrl, User.class);
+
+        String getSongUrl = String.format("http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/%s/songs", userId.toString());
+        SongsResponse user1Songs = restTemplate.getForObject(getSongUrl, SongsResponse.class);
+        user1.setSongs(user1Songs.get_embedded().getSongList());
+
+        // Get all users info
+        String getUsersUrl = "http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users";
+        ResponseEntity<User[]> responseEntity = restTemplate.getForEntity(getUsersUrl, User[].class);
+        List<User> users = Arrays.asList(responseEntity.getBody()).stream()
+                .filter(u -> (u.getId() != userId) )
+                .collect(Collectors.toList());
         System.out.println("All users info");
         for (User u : users) {
+            String getUserSongUrl = String.format("http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/%s/songs", u.getId().toString());
+            SongsResponse userSongs = restTemplate.getForObject(getUserSongUrl, SongsResponse.class);
+            u.setSongs(userSongs.get_embedded().getSongList());
             System.out.println(u.toString());
         }
-        List<User> mostSimilarUsers = findMostSimilarUsers(user1, Arrays.asList(users), 0.3);
+
+        // Find top 3 most similar users
+        List<User> mostSimilarUsers = findMostSimilarUsers(user1, users, 0.3);
 
         System.out.println("Top 3 most similar users to user1:");
         for (User user : mostSimilarUsers) {
@@ -250,18 +271,18 @@ public class FinderService {
     }
 
     /******** DUMMY FUNCTIONS TO BE REMOVED AFTER INTEGRATING WITH OTHER MICROSERVICES ********/
-    public static User getUserById(UUID userId) {
-        User u = new User(
-                userId,
-                "test-user",
-                LocalDate.now(),
-                "zh2603@columbia.edu",
-                "test-password",
-                null,
-                getSongs());
-        u.setAge(21);
-        return u;
-    }
+    // public static User getUserById(UUID userId) {
+    //     User u = new User(
+    //             userId,
+    //             "test-user",
+    //             LocalDate.now(),
+    //             "zh2603@columbia.edu",
+    //             "test-password",
+    //             null,
+    //             getSongs());
+    //     u.setAge(21);
+    //     return u;
+    // }
 
     public static User[] getAllUsers() {
         List<Song> songsOne = Arrays.asList(

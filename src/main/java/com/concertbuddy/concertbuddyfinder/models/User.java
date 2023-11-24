@@ -1,6 +1,6 @@
 package com.concertbuddy.concertbuddyfinder.models;
 
-import com.concertbuddy.concertbuddyfinder.models.Song;
+import com.concertbuddy.concertbuddyfinder.models.SongsResponse.Song;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
