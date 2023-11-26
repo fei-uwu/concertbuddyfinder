@@ -32,6 +32,7 @@ public class FinderService {
     private final MatchRepository matchRepository;
     private static final Integer MAX_AGE = 100;
     private static final Integer NUMBER_OF_MATCHES = 3;
+    private static final String USER_MICROSERVICE_URL = "http://ec2-13-59-208-208.us-east-2.compute.amazonaws.com:8012";
 
     @Autowired
     public FinderService(MatchRepository matchRepository) {
@@ -42,15 +43,15 @@ public class FinderService {
     public Match FindMatch(UUID userId, UUID concertId) {
         RestTemplate restTemplate = new RestTemplate();
         // Get user info
-        String getUserUrl = "http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/" + userId;
+        String getUserUrl = USER_MICROSERVICE_URL + "/api/v1/users/" + userId;
         User user1 = restTemplate.getForObject(getUserUrl, User.class);
 
-        String getSongUrl = String.format("http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/%s/songs", userId.toString());
+        String getSongUrl = String.format(USER_MICROSERVICE_URL + "/api/v1/users/%s/songs", userId.toString());
         SongsResponse user1Songs = restTemplate.getForObject(getSongUrl, SongsResponse.class);
         user1.setSongs(user1Songs.get_embedded().getSongList());
 
         // Get all users info
-        String getUsersUrl = "http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users";
+        String getUsersUrl = USER_MICROSERVICE_URL + "/api/v1/users";
         ResponseEntity<User[]> responseEntity = restTemplate.getForEntity(getUsersUrl, User[].class);
         List<User> users = Arrays.asList(responseEntity.getBody()).stream()
                 .filter(u -> (u.getId() != userId) )
