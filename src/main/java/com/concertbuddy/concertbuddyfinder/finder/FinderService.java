@@ -39,7 +39,6 @@ public class FinderService {
         this.matchRepository = matchRepository;
     }
 
-    // TODO: When calculate similarity, only use users that are INTERESTED + ATTENDING the concert
     public Match FindMatch(UUID userId, UUID concertId) {
         RestTemplate restTemplate = new RestTemplate();
         // Get user info
