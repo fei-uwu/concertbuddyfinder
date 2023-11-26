@@ -60,8 +60,10 @@ public class FinderService {
         for (User u : users) {
             String getUserSongUrl = String.format(USER_MICROSERVICE_URL + "/api/v1/users/%s/songs", u.getId().toString());
             SongsResponse userSongs = restTemplate.getForObject(getUserSongUrl, SongsResponse.class);
-            u.setSongs(userSongs.get_embedded().getSongList());
-            System.out.println(u.toString());
+            if (userSongs.get_embedded() != null) {
+                u.setSongs(userSongs.get_embedded().getSongList());
+                System.out.println(u.toString());
+            }
         }
 
         // Find top 3 most similar users
