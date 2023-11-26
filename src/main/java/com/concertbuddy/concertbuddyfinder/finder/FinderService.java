@@ -58,7 +58,7 @@ public class FinderService {
                 .collect(Collectors.toList());
         System.out.println("All users info");
         for (User u : users) {
-            String getUserSongUrl = String.format("http://ec2-18-188-69-200.us-east-2.compute.amazonaws.com:8012/api/v1/users/%s/songs", u.getId().toString());
+            String getUserSongUrl = String.format(USER_MICROSERVICE_URL + "/api/v1/users/%s/songs", u.getId().toString());
             SongsResponse userSongs = restTemplate.getForObject(getUserSongUrl, SongsResponse.class);
             u.setSongs(userSongs.get_embedded().getSongList());
             System.out.println(u.toString());
