@@ -63,6 +63,8 @@ public class FinderService {
             if (userSongs.get_embedded() != null) {
                 u.setSongs(userSongs.get_embedded().getSongList());
                 System.out.println(u.toString());
+            } else {
+                users.remove(u);
             }
         }
 
