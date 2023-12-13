@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/finder")
+@CrossOrigin(origins = "*")
 public class FinderController {
     private final FinderService finderService;
 
