@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/finder/matches")
+@CrossOrigin(origins = "*")
 public class MatchController {
 
     private final MatchService matchService;
