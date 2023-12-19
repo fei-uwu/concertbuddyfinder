@@ -32,7 +32,7 @@ public class FinderService {
     private final MatchRepository matchRepository;
     private final static RestTemplate restTemplate = new RestTemplate();
     private static final Integer NUMBER_OF_MATCHES = 3;
-    private static final String USER_MICROSERVICE_URL = "http://localhost:8080";
+    private static final String USER_MICROSERVICE_URL = "http://ec2-18-224-179-229.us-east-2.compute.amazonaws.com:8012";
     private static final String CONCERT_MICROSERVICE_URL = "http://concertbuddyconcert.uc.r.appspot.com";
 
     @Autowired
