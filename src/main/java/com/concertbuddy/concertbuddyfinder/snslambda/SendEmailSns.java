@@ -6,10 +6,10 @@ import com.amazonaws.services.sns.AmazonSNSClient;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 
 public class SendEmailSns {
-    public static final String TOPIC_ARN = "arn:aws:sns:us-east-2:290208614659:SendEmail";
-    public static final String ACCESS_KEY = "AKIAUHEOIBEB3G42H6AA";
-    public static final String SECRET_ACCESS_KEY = "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";
-    public static final String REGION = "us-east-2";
+    public static final String TOPIC_ARN = "";
+    public static final String ACCESS_KEY = "";
+    public static final String SECRET_ACCESS_KEY = "";
+    public static final String REGION = "";
     public static AmazonSNSClient client = (AmazonSNSClient) AmazonSNSClientBuilder
                     .standard()
                     .withRegion(REGION)

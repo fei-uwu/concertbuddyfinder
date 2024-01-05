@@ -25,7 +25,7 @@ import java.util.Optional;
 @Log4j2
 public class SendEmailLambda implements RequestHandler<SNSEvent, LambdaResponse>
 {
-    public static final String FROM = "violetforb123@gmail.com";
+    public static final String FROM = "";
     public static final String SUBJECT = "Matches Available";
     public static final String HTMLBODY = "<h1>Your matches are ready</h1> <p>Please visit the website to view your matches.</p>";
     public static final String TEXTBODY = "Your matches are ready. Please visit the website to view your matches.";
